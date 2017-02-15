@@ -17,6 +17,7 @@
 #include "mcpe/level/Level.h"
 
 #include "ITPE/blocks/WoodPlanks/WoodPlanks.h"
+#include "ITPE/blocks/Bookshelf/Bookshelf.h"
 
 using std::vector;
 
@@ -26,20 +27,22 @@ using std::vector;
 static bool (*_TessellateInWorld)(BlockTessellator*,Block &,BlockPos const&,unsigned char,bool);
 static bool TessellateInWorld(BlockTessellator *tess,Block &block,BlockPos const &pos,unsigned char aux,bool b)
 {
-	_TessellateInWorld(tess,block,pos,aux,b);
 	Block* blockk = const_cast<Block*>(&block);
 	int x = pos.x, y = pos.y, z = pos.z;
+	srand(x^y^z);
+	/*Random Bookshelf*/
+	unsigned char bookshelfraux = rand()%16;
 	
 	//Render Layer
 	
 	//Solid
 	
-	/*if(block.blockId){
-	
+	if(block.blockId == 47){
+	    return _TessellateInWorld(tess,block,pos,bookshelfraux,b);
 	}
 	else{
-		
-	}*/
+		return _TessellateInWorld(tess,block,pos,aux,b);
+	}
 }
 
 static void (*_InitClientData)();
@@ -48,6 +51,9 @@ static void InitClientData(){
 	
 	//WoodPlanks
 	Item::mItems[5] = new AuxDataBlockItem("wood_planks",5-256,Block::mBlocks[5]);
+
+	//Bookshelf
+	Item::mItems[47] = new AuxDataBlockItem("bookshelf",47-256,Block::mBlocks[47]);
 
 }
 
@@ -59,6 +65,12 @@ static void BG_InitBlocks(){
     BlockGraphics::mBlocks[5]=new BlockGraphics("portal");
 	BlockGraphics::mBlocks[5]->setTextureItem("wood_planks");
 	BlockGraphics::mBlocks[5]->setSoundType(BlockSoundType::WOOD);
+	
+	//Bookshelf
+	BlockGraphics::mBlocks[47]=new BlockGraphics("portal");
+	BlockGraphics::mBlocks[47]->setTextureItem("bookshelf_top","bookshelf","bookshelf");
+	BlockGraphics::mBlocks[47]->setSoundType(BlockSoundType::WOOD);
+	
 }
 
 static void (*_Bl_InitBlocks)();
@@ -67,6 +79,10 @@ static void Bl_InitBlocks(){
 	
 	//WoodPlanks
     Block::mBlocks[5]=new WoodPlanks("wood_planks",5);
+	
+	//Bookshelf
+	Block::mBlocks[47]=new Bookshelf("bookshelf",47);
+	
 }
 
 static void (*_InitCreativeItems)();
@@ -80,6 +96,24 @@ static void InitCreativeItems(){
 	Item::addCreativeItem(5,9);
 	Item::addCreativeItem(5,10);
 	Item::addCreativeItem(5,11);
+	
+	//Bookshelf
+	Item::addCreativeItem(47,1);
+	Item::addCreativeItem(47,2);
+	Item::addCreativeItem(47,3);
+	Item::addCreativeItem(47,4);
+	Item::addCreativeItem(47,5);
+	Item::addCreativeItem(47,6);
+	Item::addCreativeItem(47,7);
+	Item::addCreativeItem(47,8);
+	Item::addCreativeItem(47,9);
+	Item::addCreativeItem(47,10);
+	Item::addCreativeItem(47,11);
+	Item::addCreativeItem(47,12);
+	Item::addCreativeItem(47,13);
+	Item::addCreativeItem(47,14);
+	Item::addCreativeItem(47,15);
+	
 }
 
 /*static void (*_NormalTick)(Entity*entity);
