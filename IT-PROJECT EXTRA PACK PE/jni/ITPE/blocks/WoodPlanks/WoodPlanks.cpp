@@ -8,6 +8,10 @@ WoodPlanks::WoodPlanks(std::string const &name,int id) : Block(name,id,Material:
 	renderLayer = mWoodPlanks -> renderLayer;
 }
 
+bool WoodPlanks::canHaveExtraData(void) const{
+	return true;
+}
+
 int WoodPlanks::getRenderLayer(BlockSource&s, BlockPos const&pos) const
 {
 	return mWoodPlanks -> getRenderLayer(s,pos);

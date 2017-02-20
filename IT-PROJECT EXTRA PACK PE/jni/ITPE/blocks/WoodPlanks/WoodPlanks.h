@@ -10,5 +10,6 @@ public:
 public:
 	virtual int getRenderLayer(BlockSource&, BlockPos const&) const;
 	virtual int getExtraRenderLayers() const;
+	virtual bool canHaveExtraData() const;
 };
 
